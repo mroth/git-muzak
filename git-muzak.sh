@@ -46,11 +46,11 @@ install_hook() {
 ###############################
 
 itunes_track() {
-    osascript -e 'tell application "iTunes" to if player state is playing then "♬ : " & artist of current track & " / " & name of current track'
+    osascript -e 'tell application "iTunes" to if it is running and player state is playing then "♬ : " & artist of current track & " / " & name of current track'
 }
 
 spotify_track() {
-    osascript -e 'tell application "Spotify" to if player state is playing then "♬ : " & artist of current track & " / " & name of current track'
+    osascript -e 'tell application "Spotify" to if it is running and player state is playing then "♬ : " & artist of current track & " / " & name of current track'
 }
 
 current_track() {
