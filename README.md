@@ -1,7 +1,7 @@
 # git-muzak
 > Background music for your git commits
 
-Inserts the currently playing iTunes track in your git commit messages.
+Inserts the currently playing iTunes or Spotify track in your git commit messages.
 
 This is done in the "prepared" message, so you can still edit it in your $EDITOR if you decide the track is too awesome or something.
 
@@ -11,7 +11,7 @@ If you are doing a quick commit message e.g. with `-m`, things will still work:
 
 ![git-music-results-github-app-ss](https://cloud.githubusercontent.com/assets/40650/22171382/a0c1ca4c-df5a-11e6-8b83-835cafaf9602.png)
 
-Requires a macOS environment (obviously), and for one to be old-fashioned enough (like me) to still use iTunes to play your MP3s.
+Requires a macOS environment (for now).
 
 ## Installation
 

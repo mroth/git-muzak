@@ -17,6 +17,10 @@ Options:
 EOF
 }
 
+##########################
+### git hook functions ###
+##########################
+
 # git_dir for current directory
 git_dir() {
     git rev-parse --git-dir
@@ -31,11 +35,34 @@ bash_abs_src() {
 install_hook() {
     local src
     local dst
-    src="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)/$(basename "${BASH_SOURCE[0]}")"
+    src="$(bash_abs_src)"
     dst="$(git_dir)/hooks/prepare-commit-msg"
     ln -s "$src" "$dst"
     echo "√♬  Linked $dst to $src"
 }
+
+###############################
+### music related functions ###
+###############################
+
+itunes_track() {
+    osascript -e 'tell application "iTunes" to if player state is playing then "♬ : " & artist of current track & " / " & name of current track'
+}
+
+spotify_track() {
+    osascript -e 'tell application "Spotify" to if player state is playing then "♬ : " & artist of current track & " / " & name of current track'
+}
+
+current_track() {
+    ITUNES=$(itunes_track)
+    SPOTIFY=$(spotify_track)
+    echo "${ITUNES:-$SPOTIFY}"
+}
+
+
+##########################
+### main program logic ###
+##########################
 
 # ACTION: prepare commit message. this is the actual program!
 prepare_commit_msg() {
@@ -47,7 +74,8 @@ prepare_commit_msg() {
         exit
     fi
 
-    SONG=$(osascript -e 'tell application "iTunes" to if player state is playing then "♬ : " & artist of current track & " / " & name of current track')
+    # if a song is playing, amend the prepared commit message
+    SONG=$(current_track)
     if [[ $SONG ]]; then
         echo -e "$(cat "$1")\n\n$SONG" > "$1"
     fi
