@@ -37,8 +37,16 @@ install_hook() {
     echo "√♬  Linked $dst to $src"
 }
 
-# ACTION: prepare commit message. this tiny part is the actual program!
+# ACTION: prepare commit message. this is the actual program!
 prepare_commit_msg() {
+    # See https://git-scm.com/docs/githooks to see what arguments we should expect to be passed.
+    # certain types of commits (based on $2) we don't want to mess with...
+    # "merge" / "squash" = p. obvious
+    # "commit" = surprise! this actually only applies to -c/-C/--amend commits
+    if [[ $2 = "merge" || $2 = "squash" || $2 = "commit" ]]; then
+        exit
+    fi
+
     SONG=$(osascript -e 'tell application "iTunes" to if player state is playing then "♬ : " & artist of current track & " / " & name of current track')
     if [[ $SONG ]]; then
         echo -e "$(cat "$1")\n\n$SONG" > "$1"
